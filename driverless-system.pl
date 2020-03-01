@@ -122,5 +122,8 @@ transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change t
 %%
 %% =============================================================================
 
+interface(PairsSet) :- findall({State, Event}, transition(State, _, Event, _, _), PairsList), list_to_set(PairsList, PairsSet).
+% set_prolog_flag(answer_write_options, [quoted(true), portray(true), spacing(next_argument)]).
+% the previous line allows prolog to print the entire list instead of a truncated list
 
 %% eof.
