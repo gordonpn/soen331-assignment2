@@ -122,10 +122,17 @@ transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change t
 %%
 %% =============================================================================
 
-reachable(Source, Target) :- transition(Source, Target, Event, Guard, Action), write("Event = "), write(Event), nl, write("Guard = "), write(Guard), nl, write("Action = "), write(Action), nl, !.
-reachable(Source, Target) :- transition(Source, Node, _, _, _), reachable(Node, Target), write("loop").
-
-transition(Source, Destination) :- reachable(Source, Destination), !.
+transition(Source, Target) :- 
+    transition(Source, Target, Event, Guard, Action), 
+    write("Event = "), write(Event), nl, 
+    write("Guard = "), write(Guard), nl, 
+    write("Action = "), write(Action), nl, !.
+transition(Source, Target) :- 
+    transition(Node, Target, Event, Guard, Action),
+    write("Event = "), write(Event), nl, 
+    write("Guard = "), write(Guard), nl, 
+    write("Action = "), write(Action), nl, 
+    transition(Source, Node).
 
 interface(PairsSet) :- findall({State, Event}, transition(State, _, Event, _, _), PairsList), list_to_set(PairsList, PairsSet).
 % set_prolog_flag(answer_write_options, [quoted(true), portray(true), spacing(next_argument)]).
