@@ -1,1 +1,7 @@
 .vscode/
+
+efsm.aux
+efsm.fdb_latexmk
+efsm.fls
+efsm.log
+efsm.synctex.gz

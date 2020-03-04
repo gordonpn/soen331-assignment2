@@ -11,7 +11,7 @@
 
 \title{SOEN331: Introduction to Formal Methods\\for Software Engineering\\
 Assignment 2 on Extended Finite State Machines}
-\author{Author's name}
+\author{Gordon Pham-Nguyen, Ian Philips, Tabesh Haidary}
 \date{\today}
 
 \begin{document}
@@ -19,32 +19,43 @@ Assignment 2 on Extended Finite State Machines}
 
 \maketitle
 
-\section{Metro passageway formal specification}
+\newpage
 
-\noindent The EFSM of the metro passageway is the tuple $S = (Q, \Sigma_1, \Sigma_2, q_0, V, \Lambda)$, where\\
+\section{Driver-less car system formal specification}
 
-\noindent $Q = \{locked, unlocked\}$\\
-\noindent $\Sigma_1 = \{request~entry, pass\}$\\
-\noindent $\Sigma_2 = \{lock, unlock, beep\}$\\
-\noindent $q_0: locked$\\
-\noindent $V: ticket = \{valid, invalid\}$\\
+\noindent The EFSM of the driver-less car system is the tuple $S = (Q, \Sigma_1, \Sigma_2, q_0, V, \Lambda)$, where\\
+
+\noindent $Q = \{Idle~(Parked), Manual~Mode, Cruise~Mode, Panic~Mode\}$\\
+\noindent $\Sigma_1 = \{State~engine, shut~off~engine, drive~signal, parked~signal, cruise~signal, manual~signal,\\ car~arrived~at~destination, panic~mode~off, unforeseen~event~or~panic~signal\}$\\
+\noindent $\Sigma_2 = \{beep, stop~car, turn~on, hazard~lights, turn~off~hazard~lights\}$\\
+\noindent $q_0: Idle~(Parked)$\\
+\noindent $V: \{\}$\\
 \noindent $\Lambda$: Transition specifications\\
-\indent 1. $\rightarrow locked$\\
-\indent 2. $locked \xrightarrow {\text { request entry [ticket is valid] / (unlock ; beep)}} unlocked$\\
-\indent 3. $unlocked \xrightarrow {\text { pass / lock}} locked$\\
+\indent 1. $\rightarrow Idle~(Parked)$\\
+\indent 2. $Idle~(Parked) \xrightarrow {\text {cruise~signal [destination is set]}} Cruise~Mode$\\
+\indent 3. $Idle~(Parked) \xrightarrow {\text {drive~signal}} Manual~Mode$\\
+\indent 4. $Manual~Mode \xrightarrow {\text {cruise~signal [destination is set]}} Cruise~Mode$\\
+\indent 5. $Cruise~Mode \xrightarrow {\text {car~arrived~at~destination}} Idle~(Parked)$\\
+\indent 6. $Idle~(Parked) \xrightarrow {\text {cruise~signal [destination is not set] / beep}} Idle~(Parked)$\\
+\indent 7. $Manual~Mode \xrightarrow {\text {parked~signal [car is stopped]}} Idle~(Parked)$\\
+\indent 8. $Cruise~Mode \xrightarrow {\text {unforeseen~event~or~panic~signal / stop car ; turn on hazard lights}} Panic~Mode$\\
+\indent 9. $Panic~Mode \xrightarrow {\text {panic~mode~off / turn off hazard lights}} Idle~(Parked)$\\
+\indent 10. $Manual~Mode \xrightarrow {\text {cruise signal [destination is not set] / beep}} Manual~Mode$\\
+\indent 11. $Cruise~Mode \xrightarrow {\text {manual signal}} Manual~Mode$\\
+\indent 12. $Idle~(Parked) \xrightarrow {\text {shut off engine}} Exit$\\
 
-\noindent The UML state diagram is shown in Figure~\ref{fig:metro-fig}.
+% \noindent The UML state diagram is shown in Figure~\ref{fig:metro-fig}.
 
 \newpage
 
 \section{UML state diagrams}
 
-\begin{figure}[h!]
-	\centering
-		\includegraphics[width=0.8\textwidth]{./figures/eps/metro.eps}
-		  \caption{Metro.}
-  \label{fig:metro-fig}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 		\includegraphics[width=0.8\textwidth]{./figures/eps/metro.eps}
+% 		  \caption{Metro.}
+%   \label{fig:metro-fig}
+% \end{figure}
 
 \end{spacing}
 
