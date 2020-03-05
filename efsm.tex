@@ -11,7 +11,7 @@
 
 \title{SOEN331: Introduction to Formal Methods\\for Software Engineering\\
 Assignment 2 on Extended Finite State Machines}
-\author{Gordon Pham-Nguyen, Ian Philips, Tabesh Haidary}
+\author{Gordon Pham-Nguyen, Ian Philips, Tabesh Haidary, Jeffrey Li}
 \date{\today}
 
 \begin{document}
@@ -46,6 +46,64 @@ Assignment 2 on Extended Finite State Machines}
 
 % \noindent The UML state diagram is shown in Figure~\ref{fig:metro-fig}.
 
+\newpage
+
+\noindent The EFSM of the car system in manual mode is the tuple $S = (Q, \Sigma_1, \Sigma_2, q_0, V, \Lambda)$, where\\
+
+\noindent $Q = \{Manual~Mode, Break~Mode\}$\\
+\noindent $\Sigma_1 = \{accelerate~engine, reduce~signal, break~signal, accelerate~signal\}$\\
+\noindent $\Sigma_2 = \{faster~engine, slower~engine, 0-speed\}$\\
+\noindent $q_0: Manual~Driving$\\
+\noindent $V: \{\}$\\
+\noindent $\Lambda$: Transition specifications\\
+\indent 1. $\rightarrow Manual~Driving$\\
+\indent 2. $Manual~Driving \xrightarrow {\text {accelerate~signal/faster~engine}} Manual~Driving$\\
+\indent 3. $Manual~Driving \xrightarrow {\text {reduce~signal/slower~engine}} Manual~Driving$\\
+\indent 4. $Manual~Driving \xrightarrow {\text {break~signal/0-speed}} Break~Mode$\\
+\indent 5. $Break~Mode \xrightarrow {\text {accelerate~signal}} Manual~Mode$\\
+
+\newpage
+
+\noindent The EFSM of the car system in cruising mode is the tuple $S = (Q, \Sigma_1, \Sigma_2, q_0, V, \Lambda)$, where\\
+
+\noindent $Q = \{Cruising, Tailing, Changing~Lane\}$\\
+\noindent $\Sigma_1 = \{Car~detected~ahead, after~1~second, any~change~lane~signal, target~lane~signal, \\ panic~signal\}$\\
+\noindent $\Sigma_2 = \{reduce~speed, maintain~current~speed, change~to~left~lane~signal, panic~signal\}$\\
+\noindent $q_0: Cruising$\\
+\noindent $V: \{\}$\\
+\noindent $\Lambda$: Transition specifications\\
+\indent 1. $\rightarrow Cruising$\\
+\indent 2. $Cruising \xrightarrow {\text {Car~detected~ahead [distance under threshhold]/ reduce~speed}} Tailing$\\
+\indent 3. $Tailing \xrightarrow {\text {after~1~second [distance under threshold]/ reduce~speed}} Tailing$\\
+\indent 4. $Tailing \xrightarrow {\text {after~1~second [obstacle not moving or safe distance cannot be maintained]/ \\change~to~left~lane~signal}}\\ \indent     ~~~Changing~Lane$\\
+\indent 5. $Tailing \xrightarrow {\text {after~1~second [distance is above or at threshold]/ maintain~current~speed}} Cruising$\\
+\indent 6. $Cruising \xrightarrow {\text {any~lane~change~signal}} Changing~Lane$\\
+\indent 7. $Changing~Lane \xrightarrow {\text {target~lane~signal}} Cruising$\\
+\indent 8. $Changing~Lane \xrightarrow {\text {panic~signal/panic~signal}} Cruising$\\
+
+\newpage
+
+\noindent The EFSM of the car system in navigating mode is the tuple $S = (Q, \Sigma_1, \Sigma_2, q_0, V, \Lambda)$, where\\
+
+\noindent $Q = \{Navigating\}$\\
+\noindent $\Sigma_1 = \{After~1~second\}$\\
+\noindent $\Sigma_2 = \{accelerate~signal, increase~speed, reduce~speed~signal, decrease~speed,
+\\car~arrived~at~destination~signal, turn~right~at~next~intersection, turn~left~at~next~intersection, 
+\\change~to~right-most~lane~signal, change~to~left-most~lane~signal\}$\\
+\noindent $q_0: Navigating$\\
+\noindent $V: \{\}$\\
+\noindent $\Lambda$: Transition specifications\\
+\indent 1. $\rightarrow Navigating$\\
+\indent 2. $Navigating \xrightarrow {\text {after~1~second [left turn ahead]/ change~to~left-most~lane~signal}} Navigating$\\
+\indent 3. $Navigating \xrightarrow {\text {after~1~second [right turn ahead]/ change~to~right-most~lane~signal}} Navigating$\\
+\indent 4. $Navigating \xrightarrow {\text {after~1~second [Destination ahead]/ change~to~right-most~lane~signal}} Navigating$\\
+\indent 5. $Navigating \xrightarrow {\text {after~1~second [turn left]/ turn~left~at~next~intersection}} Navigating$\\
+\indent 6. $Navigating \xrightarrow {\text {after~1~second [turn right]/ turn~right~at~next~intersection}} Navigating$\\
+\indent 7. $Navigating \xrightarrow {\text {after~1~second [arrived at destination]/ car~arrived~at~destination~signal}} Navigating$\\
+\indent 8. $Navigating \xrightarrow {\text {after~1~second [current speed more than road speed + 5\%]/ reduce~speed~signal; decrease~speed}} 
+\\\indent~~~Navigating$\\
+\indent 9. $Navigating \xrightarrow {\text {after~1~second [current speed more than road speed - 5\%]/ accelerate signal; increase speed}} 
+\\\indent~~~Navigating$\\
 \newpage
 
 \section{UML state diagrams}
