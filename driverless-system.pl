@@ -9,8 +9,6 @@
 %%  Authors: 
 %%
 %%  Gordon Pham-Nguyen, 40018402, gordon.pn6@gmail.com
-%%  name2, id2, email2 
-%%  ...
 %%
 %% =============================================================================
 
@@ -18,10 +16,10 @@
 %%
 %%  Facts
 %% 
-%% state(S)
-%% initial state(S1, S2) indicates that S2 is the initial state of S1
-%% superstate(S1, S2) implies that S1 is the superstate of S2
-%% transition(Source, Destination, Event, Guard, Action)
+%%  state(S)
+%%  initial state(S1, S2) indicates that S2 is the initial state of S1
+%%  superstate(S1, S2) implies that S1 is the superstate of S2
+%%  transition(Source, Destination, Event, Guard, Action)
 %% 
 %% =============================================================================
 
@@ -102,19 +100,12 @@ transition(navigating, navigating, 'after 1 second', 'right turn ahead', 'change
 transition(navigating, navigating, 'after 1 second', 'left turn ahead', 'change to left-most lane signal').
 
 %% Transitions within the Changing Lane state
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change right lane && right lane is open', 'change to right lane; target lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change right lane && right lane is not open', 'change right lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change left lane && left lane is open', 'change to left lane; target lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change left lane && left lane is not open', 'change left lane signal').
-transition('merging lane', 'merging lane', 'after 1 second && (obstacle ahead or cannot change lane)', null, 'panic signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change to right-most lane && Lanes == 1 && right lane is open', 'change to right lane; target lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change to right-most lane && Lanes == 1 && right lane is not open', 'change to right lane; target lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change to right-most lane && Lanes > 1 && right lane is open', 'change to right lane; Lanes--; change to right-most lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change to right-most lane && Lanes > 1 && right lane is not open', 'change to right-most lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change to left-most lane && Lanes == 1 && left lane is open', 'change to left lane; target lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change to left-most lane && Lanes == 1 && left lane is not open', 'change to left lane; target lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change to left-most lane && Lanes > 1 && left lane is open', 'change to left lane; Lanes--; change to left-most lane signal').
-transition('merging lane', 'merging lane', 'after 1 second', 'Signal == change to left-most lane && Lanes > 1 && left lane is not open', 'chang~e to left-most lane signal').
+transition('merging lane', 'merging lane', 'after 1 second', 'Lanes == 0', 'target lane signal').
+transition('merging lane', 'merging lane', 'after 1 second', 'obstacle ahead or cannot change lane', 'panic signal').
+transition('merging lane', 'merging lane', 'after 1 second', 'Lanes > 0 and right lane is open', 'change to right lane; Lanes--').
+transition('merging lane', 'merging lane', 'after 1 second', 'Lanes > 0 and right lane is not open', 'change right lane signal').
+transition('merging lane', 'merging lane', 'after 1 second', 'Lanes < 0 and left lane is open', 'change to left lane; Lanes++').
+transition('merging lane', 'merging lane', 'after 1 second', 'Lanes < 0 and left lane is not open', 'change left lane signal').
 
 %% =============================================================================
 %%
