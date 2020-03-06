@@ -104,6 +104,26 @@ Assignment 2 on Extended Finite State Machines}
 \\\indent~~~Navigating$\\
 \indent 9. $Navigating \xrightarrow {\text {after~1~second [current speed more than road speed - 5\%]/ accelerate signal; increase speed}} 
 \\\indent~~~Navigating$\\
+
+\newpage
+
+\noindent The EFSM of the car system in lane changing mode is the tuple $S = (Q, \Sigma_1, \Sigma_2, q_0, V, \Lambda)$, where\\
+
+\noindent $Q = \{Merging Lane\}$\\
+\noindent $\Sigma_1 = \{After~1~second\}$\\
+\noindent $\Sigma_2 = \{target~lane~signal, obstacle~ahead~or~cannot~change~lane, panic~signal, change~to~right~lane,
+\\\noindent change~to~left~lane, change~right~lane~signal, change~left~lane~signal\}$\\
+\noindent $q_0: Merging Lane$\\
+\noindent $V: \{Lanes\}$\\
+\noindent $\Lambda$: Transition specifications\\
+\indent 1. $\rightarrow Merging Lane$\\
+\indent 2. $Merging Lane \xrightarrow {\text {after~1~second [Lanes == 0]/ target~lane~signal}} Merging Lane$\\
+\indent 3. $Merging Lane \xrightarrow {\text {after~1~second [obstacle~ahead~or~cannot~change~lane]/ panic~signal}} Merging Lane$\\
+\indent 4. $Merging Lane \xrightarrow {\text {after~1~second [Lanes $\textgreater$ 0 $\wedge$ right lane is open]/ (change~to~right~lane ; Lanes$\textendash~\textendash$)}} Merging Lane$\\
+\indent 5. $Merging Lane \xrightarrow {\text {after~1~second [Lanes $\textgreater$ 0 $\wedge$ right lane is not open]/ change~right~lane~signal}} Merging Lane$\\
+\indent 6. $Merging Lane \xrightarrow {\text {after~1~second [Lanes $\textless$ 0 $\wedge$ left lane is open]/ (change~to~left~lane ; Lanes++)}} Merging Lane$\\
+\indent 7. $Merging Lane \xrightarrow {\text {after~1~second [Lanes $\textless$ 0 $\wedge$ left lane is not open]/ change~left~lane~signal}} Merging Lane$\\
+
 \newpage
 
 \section{UML state diagrams}
